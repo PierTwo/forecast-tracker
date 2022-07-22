@@ -1,0 +1,38 @@
+.navbar-brand {
+    background-image: linear-gradient(to right, navy, rebeccapurple);
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+.search {
+    height: 40px;
+    font-size: 24px;
+}
+
+#searchBtn {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #4E9FE5;
+    border: 0;
+}
+
+#searchBtn:active {
+    background-color: #54a9f3;
+}
+
+#searchInput {
+    border: 2px solid black;
+}
+
+.cityContainer {
+    outline: 1px solid black;
+}
+
+.navbar-brand h1 {
+    font-size: 52px !important;
+}

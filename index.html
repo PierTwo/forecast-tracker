@@ -8,11 +8,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css"
         integrity="sha512-XWTTruHZEYJsxV3W/lSXG1n3Q39YIWOstqvmFsdNEEQfHoZ6vm6E9GK2OrF6DSJSpIbRbi+Nn0WDPID9O7xB2Q=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Forecast Tracker</title>
 </head>
 
 <body>
+    <nav class="navbar-brand p-2">
+        <h1 class="text-center text-white">Forecast Tracker</h1>
+    </nav>
+
+    <div class="col-12 row m-0 ">
+        <div class="col-2 container p-3">
+            <h2 class="fw-bold">Search for a City:</h2>
+            <input id="searchInput" class="col-12 rounded search" type="text" placeholder="Denver">
+            <button id="searchBtn" class="row m-0 mt-3 col-12 rounded text-white search" type="submit">Search</button>
+
+            <div class="container cityContainer col-12 m-0 mt-4"></div>
+        </div>
+
+        <div class="col-10 container">
+            <div id="cityWeather" class="col-10 container"></div>
+
+            <div id="fiveDayForecast" class="col-10 container"></div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
