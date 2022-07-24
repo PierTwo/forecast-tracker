@@ -2,6 +2,7 @@
 var searchBtnEl = $("#searchBtn")
 var searchInputEl = $("#searchInput");
 var weatherNow = $("#weatherNow");
+var fiveDayForecast = $("#fiveDayForecast");
 
 // API key for OpenWeatherMap API
 var apiKey = "99809bc32c8c7448097022421446e415";
@@ -38,10 +39,16 @@ function cityWeather(coordinates) {
         })
         // Returns the promise with formatted JSON data
         .then(function (data) {
+            console.log(data.daily);
             // Creates variable with current weather data
             var currentWeather = data.current;
+            // Creates variable with forecast data
+            var forecast = data.daily;
+
             // Calls renderWeather and passes the currentWeather variable to the function
             renderWeather(currentWeather);
+            // Calls renderForecast and passes the forecast variable to the function
+            renderForecast(forecast);
         });
 };
 
@@ -50,18 +57,44 @@ function renderWeather(currentWeather) {
     // Formats unix timestamp to display the month, day, and year
     var currentDate = moment(currentWeather.dt * 1000).format("MM/DD/YY");
 
-    // Creates a variable of HTML elements with current weather data to be appended to the webpage
+    // Creates a variable of HTML elements with current weather data to be appended to the page
     var weatherNowHTML = `<h2 class="fw-bold">${cityName} ${currentDate} <img src="http://openweathermap.org/img/w/${currentWeather.weather[0].icon}.png"></img></h2>` +
         `<p>Temp: ${Math.round(currentWeather.temp)}\u00B0F</p>` +
         `<p>Wind: ${Math.round(currentWeather.wind_speed)} MPH</p>` +
         `<p>Humidity: ${Math.round(currentWeather.humidity)}%</p>` +
         `<p>UV Index: <span class="bg-success text-white p-1">${currentWeather.uvi}</span></p>`;
 
-    // Appends the weatherNowHTML to webpage 
+    // Appends the weatherNowHTML to page 
     weatherNow.append(weatherNowHTML);
     // Adds Bootstrap classes to create a rounded border around the current weather container
     weatherNow.addClass("border border-dark rounded");
+};
 
+// Renders the 5 day forecast to the page
+function renderForecast(forecast) {
+    // Creates a variable of a h2 tag
+    var forecastTitle = `<h2 class="row fw-bold">5 Day Forecast:</div>`;
+    // Appends the forecastTitle variable to the page
+    fiveDayForecast.append(forecastTitle);
+
+    // Creates for loop to display five days of forecast
+    for (let i = 0; i < 5; i++) {
+        // Creates a variable that displays each forecast day's date
+        forecastDate = moment(forecast[i].dt * 1000).format("MM/DD/YY");
+
+        // Creates a variable of HTML elements to display forecast cards
+        var forecastHTML = `<div class="m-4 mt-2 card card-bg text-white" style="height: 16rem; width: 12rem;">` +
+            `<h2 class="fw-bold">${forecastDate}</h2>` +
+            `<img src="http://openweathermap.org/img/w/${forecast[i].weather[0].icon}.png" style="width: 50px;">` +
+            `<p>Temp: ${Math.round(forecast[i].temp.max)}\u00B0F</p>` +
+            `<p>Wind: ${Math.round(forecast[i].wind_speed)} MPH</p>` +
+            `<p>Humidity: ${Math.round(forecast[i].humidity)}%</p>` +
+            `<p>UV Index: <span class="bg-success text-white p-1">${forecast[i].uvi}</span></p>` +
+            `</div>`;
+
+        // Appends the forecastHTML variable to the page 
+        fiveDayForecast.append(forecastHTML);
+    };
 };
 
 // Gets user input value from the city search input and calls cityCoordinates function to get the coordinates
