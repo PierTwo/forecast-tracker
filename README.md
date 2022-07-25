@@ -14,7 +14,7 @@ SO THAT I can plan a trip accordingly
 ## Usage
 
 Use the search input to type in a city name then click search to find the weather for that city. Data will be displayed for the current weather as well as a five day forecast.
-after searching for a city it is saved to the local storage so all you have to do it click the newly created button with that city name to see the weather for that city again.
+After searching for a city it is saved to the local storage so all you have to do it click the newly created button with that city name to see the weather for that city again.
 Search for another city to see it's weather data and and have that search saved to local storage as well.
 
 ## Images
