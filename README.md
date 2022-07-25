@@ -2,8 +2,7 @@
 
 ## Project Description
 
-This project is a weather and forecast tracker that displays current weather data and a five day forecast. User search history is saved to easily display the weather again for a
-city the user has already looked up
+This project is a weather and forecast tracker that displays current weather data and a five day forecast. User search history is saved to easily display the weather again for a city the user has already looked up
 
 ## User Story
 
@@ -14,7 +13,7 @@ SO THAT I can plan a trip accordingly
 ```
 ## Usage
 
-User the search input to type in a city name then click click search to find the weather for that city. Data will be displayed for the current weather as well as a five day forecast.
+Use the search input to type in a city name then click search to find the weather for that city. Data will be displayed for the current weather as well as a five day forecast.
 after searching for a city it is saved to the local storage so all you have to do it click the newly created button with that city name to see the weather for that city again.
 Search for another city to see it's weather data and and have that search saved to local storage as well.
 
