@@ -24,13 +24,15 @@
             <input id="searchInput" class="col-12 rounded search" type="text" placeholder="Denver">
             <button id="searchBtn" class="row m-0 mt-3 col-12 rounded text-white search" type="submit">Search</button>
 
-            <div class="container cityContainer col-12 m-0 mt-4"></div>
+            <div id="historyContainer" class="container col-12 m-0 mt-4 pt-3">
+                <button id="clearHistoryBtn" class="border-0 rounded col-12 p-1">Clear History</button>
+            </div>
         </div>
 
         <div class="col-10 container">
             <div id="weatherNow" class="col-12 container m-2 mt-3"></div>
 
-            <div id="fiveDayForecast" class="row col-12 m-2 mt-2"></div>
+            <div id="fiveDayForecast" class="row col-12 container m-2 mt-2"></div>
         </div>
     </div>
 

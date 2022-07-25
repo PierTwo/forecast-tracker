@@ -1,16 +1,35 @@
 // Gets elements from HTML
-var searchBtnEl = $("#searchBtn")
+var searchBtnEl = $("#searchBtn");
 var searchInputEl = $("#searchInput");
 var weatherNow = $("#weatherNow");
 var fiveDayForecast = $("#fiveDayForecast");
+var historyContainer = $("#historyContainer");
+var clearHistoryEl = $("#clearHistoryBtn");
 
 // API key for OpenWeatherMap API
 var apiKey = "99809bc32c8c7448097022421446e415";
 
+// Defines a variable to be used to store the city name
+var cityName;
+
+// When the document loads run this function
+$(document).ready(function () {
+    // Loops through every local storage item
+    for (let i = 0; i < localStorage.length; i++) {
+        // And if that local storage item is truthy...
+        if (localStorage.getItem(i)) {
+            // Create a variable that contains the HTML for the history button using the value of i to get that storage item and it's id
+            var historyBtnHTML = `<button id="${localStorage.key(i)}"class="border-0 rounded col-12 p-1 historyBtn mb-3">${localStorage.getItem(i)}</button>`;
+            // Place the historyBtnHTML within the historyContainer on the page before other child elements
+            historyContainer.prepend(historyBtnHTML);
+        };
+    };
+});
+
 // Gets coordinates for the city user searched for
-function cityCoordinates(city) {
+function cityCoordinates() {
     // Promises to retrieve the API data for the city name the user searched for
-    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`)
+    fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`)
         // Returns the promise by getting API response
         .then(function (response) {
             // Formats the response to JSON
@@ -39,7 +58,6 @@ function cityWeather(coordinates) {
         })
         // Returns the promise with formatted JSON data
         .then(function (data) {
-            console.log(data.daily);
             // Creates variable with current weather data
             var currentWeather = data.current;
             // Creates variable with forecast data
@@ -79,7 +97,7 @@ function renderForecast(forecast) {
 
     // Creates for loop to display five days of forecast
     for (let i = 0; i < 5; i++) {
-        // Creates a variable that displays each forecast day's date
+        // Creates a variable to display each date for the forecast
         forecastDate = moment(forecast[i].dt * 1000).format("MM/DD/YY");
 
         // Creates a variable of HTML elements to display forecast cards
@@ -102,13 +120,70 @@ function searchCity(event) {
     // Prevents the default event from occuring when button is clicked
     event.preventDefault();
 
+    // Calls emptyWeather function
+    emptyWeather();
+
+    // Sets cityName to the search input value
+    cityName = searchInputEl.val();
+
+    // Calls the cityCoordinates function
+    cityCoordinates();
+    // Calls the saveHistory function
+    saveHistory();
+};
+
+// Removes the displayed weather to be replaced with new weather data
+function emptyWeather() {
     // Removes child elements of the current weather container in order to display the weather for a different city
     weatherNow.empty();
-
-    // Creates a variable with the user input from the city search
-    cityName = searchInputEl.val();
-    // Calls the cityCoordinates function and passes the cityName variable to the function
-    cityCoordinates(cityName);
+    // Removes previous forecast so it is only displayed once
+    fiveDayForecast.empty();
 };
+
+// Saves the user's search history and places history button on page
+function saveHistory() {
+    // Loops through all the children of historyContainer
+    for (let i = 0; i < historyContainer.children().length; i++) {
+        // Creates a variable with HTML in it and sets the id to i and the text to the cityName variable
+        var historyBtnHTML = `<button id="${i}" class="border-0 rounded col-12 p-1 historyBtn mb-3">${cityName}</button>`;
+    };
+    // Places the historyBtnHTML before any other child elements
+    historyContainer.prepend(historyBtnHTML);
+
+    // For each element matching the class of historyBtn
+    $(".historyBtn").each(function (index) {
+        // Set local storage key equal to the index value and the item with the current index id
+        localStorage.setItem(index, $(`#${index}`).text());
+    });
+};
+
+// Removes the search history
+function removeHistory() {
+    // Removes all sibling elements of the clearHistoryEl button
+    clearHistoryEl.siblings().remove();
+    // Clears local storage
+    localStorage.clear();
+};
+
+// Gets the name of the history button you clicked on to give to the cityCoordinates function and calls it
+function historyWeather(event) {
+    // Prevents the default event when clicking on the button
+    event.preventDefault();
+
+    // Calls the emptyWeather function
+    emptyWeather();
+
+    // Sets cityName the the text of the button the user clicked
+    cityName = $(this).text()
+    // Calls the cityCoordinates function to get weather data for the history button
+    cityCoordinates();
+};
+
 // Adds event handler to the search button to call the searchCity function when user clicks the button
 searchBtnEl.click(searchCity);
+
+// Adds event handler to the clear history button to call the removeHistory function when clicked
+clearHistoryEl.click(removeHistory);
+
+// Adds event handler to all the buttons with the class of historyBtn to call the historyWeather function when clicked
+$(document).on("click", ".historyBtn", historyWeather);
