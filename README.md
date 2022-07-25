@@ -27,7 +27,7 @@ Search for another city to see it's weather data and and have that search saved 
 
 ![mobile-view](./assets/images/mobile-view.jpeg)
 
-### Scheduler Demo 
+### Demo 
 
 ![scheduler-demo](./assets/images/forecast-tracker-demo.gif)
 
